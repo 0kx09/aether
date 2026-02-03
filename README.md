@@ -2,6 +2,24 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Telegram Bot Setup
+
+To enable checkout notifications to Telegram, you need to:
+
+1. Create a Telegram bot by messaging [@BotFather](https://t.me/BotFather) on Telegram
+2. Get your bot token from BotFather
+3. Get your chat ID by:
+   - Messaging your bot
+   - Visiting: `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
+   - Finding your chat ID in the response (it's the `id` field in the `chat` object)
+4. Create a `.env.local` file in the root directory with:
+   ```
+   TELEGRAM_BOT_TOKEN=your_bot_token_here
+   TELEGRAM_CHAT_ID=your_chat_id_here
+   ```
+
+### Running the Development Server
+
 First, run the development server:
 
 ```bash
@@ -34,3 +52,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# aether
