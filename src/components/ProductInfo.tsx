@@ -29,8 +29,30 @@ export default function ProductInfo() {
   const [addedToCart, setAddedToCart] = useState(false);
 
   const handleAddToCart = () => {
+    // Get existing cart from localStorage
+    const existingCart = localStorage.getItem('cart');
+    const cart = existingCart ? JSON.parse(existingCart) : [];
+
+    // Add new item or update quantity
+    const productIndex = cart.findIndex((item: any) => item.id === 1);
+    if (productIndex >= 0) {
+      cart[productIndex].quantity += quantity;
+    } else {
+      cart.push({
+        id: 1,
+        name: "Complete Anti-Aging Skincare System",
+        variant: "3-Product Complimentary Set",
+        price: SHIPPING_PRICE,
+        quantity: quantity,
+        image: "/product.png",
+      });
+    }
+
+    // Save to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
     setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 3000);
+    setTimeout(() => setAddedToCart(false), 5000);
   };
 
   return (
@@ -146,15 +168,26 @@ export default function ProductInfo() {
       {/* CTA Button */}
       <div className="flex flex-col gap-4">
         {addedToCart ? (
-          <Link
-            href="/basket"
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#6B7A64] py-4 text-base font-light tracking-wide text-white transition-all duration-300 hover:bg-[#2C2A27]"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Added to Basket
-          </Link>
+          <>
+            <Link
+              href="/basket"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#A8B5A0] py-5 text-base sm:text-lg font-light tracking-wide text-white transition-all duration-300 hover:bg-[#6B7A64] shadow-lg"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Added! View Basket
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+            <button
+              onClick={handleAddToCart}
+              className="w-full rounded-full border-2 border-[#E8E3DC] bg-white py-4 text-base font-light tracking-wide text-[#6B7A64] transition-all duration-300 hover:border-[#A8B5A0] hover:bg-[#F4EFE6]"
+            >
+              Add Another Set
+            </button>
+          </>
         ) : (
           <button
             onClick={handleAddToCart}

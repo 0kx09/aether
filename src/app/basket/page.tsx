@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface CartItem {
@@ -12,45 +12,35 @@ interface CartItem {
   image: string;
 }
 
-const initialCartItems: CartItem[] = [
-  {
-    id: 1,
-    name: "Complete Anti-Aging Skincare System",
-    variant: "3-Product Complimentary Set",
-    price: 9.95,
-    quantity: 1,
-    image: "/product.png",
-  },
-];
-
 export default function BasketPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
-  const [promoCode, setPromoCode] = useState("");
-  const [promoApplied, setPromoApplied] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
 
   const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+    const updatedItems = cartItems.map(item =>
+      item.id === id ? { ...item, quantity: newQuantity } : item
     );
+    setCartItems(updatedItems);
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
   };
 
   const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+    const updatedItems = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedItems);
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
   };
 
   const productValue = 135.00; // Value of the 3 products
   const shippingCost = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discount = 0;
   const total = shippingCost;
-
-  const applyPromo = () => {
-    if (promoCode.toUpperCase() === "SAVE10") {
-      setPromoApplied(true);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
