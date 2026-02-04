@@ -44,6 +44,23 @@ export default function SuccessPage() {
             </p>
           </div>
 
+          {/* Payment Notice */}
+          <div className="rounded-2xl bg-gradient-to-br from-[#A8B5A0]/20 to-[#6B7A64]/10 border-2 border-[#A8B5A0] p-6 mb-8">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <svg className="h-8 w-8 text-[#6B7A64]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-base font-serif font-medium text-[#2C2A27] mb-2">Payment Protection</h3>
+                <p className="text-sm text-[#2C2A27] font-light leading-relaxed">
+                  <strong className="font-medium">Your card will not be charged until your products arrive at your door.</strong> We only process payment upon successful delivery. If there are any issues with your shipment, you won't pay a penny.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* What's Next Section */}
           <div className="space-y-6 mb-8">
             <div className="rounded-2xl bg-[#F4EFE6] border border-[#E8E3DC] p-6 text-left">
@@ -118,9 +135,12 @@ export default function SuccessPage() {
                 <span className="text-[#6B7A64] font-light line-through">£135.00</span>
               </div>
               <div className="flex justify-between items-center pt-2 border-t border-[#E8E3DC]">
-                <span className="font-serif font-medium text-[#2C2A27]">Shipping Paid</span>
+                <span className="font-serif font-medium text-[#2C2A27]">Shipping Reserved</span>
                 <span className="font-serif font-medium text-[#2C2A27]">£9.95</span>
               </div>
+              <p className="text-xs text-[#A8B5A0] font-light italic pt-2">
+                * Charged only upon successful delivery
+              </p>
             </div>
           </div>
 
