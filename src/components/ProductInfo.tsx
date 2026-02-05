@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const SHIPPING_PRICE = 9.95;
+const SHIPPING_PRICE = 9.50;
 const TOTAL_VALUE = 135.00; // 3 products at £45 each
 
 const products = [

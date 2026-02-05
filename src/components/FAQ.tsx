@@ -5,7 +5,7 @@ import { useState } from "react";
 const faqs = [
   {
     question: "Why is this FREE? What's the catch?",
-    answer: "There's NO catch! We're so confident you'll love our products that we're giving you the entire £135 bundle FREE - you only pay £9.95 to cover shipping and handling. Once you experience the incredible results, we know you'll become a loyal customer and tell your friends!",
+    answer: "There's NO catch! We're so confident you'll love our products that we're giving you the entire £135 bundle FREE - you only pay £9.50 to cover shipping and handling. Once you experience the incredible results, we know you'll become a loyal customer and tell your friends!",
   },
   {
     question: "How do I use the 3 products together?",

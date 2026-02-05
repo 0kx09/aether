@@ -144,7 +144,7 @@ export default function CheckoutPage() {
   }, []);
 
   const productValue = 135.00;
-  const shippingCost = 9.95;
+  const shippingCost = 9.50;
   const expressCost = deliveryMethod === "express" ? 4.99 : 0;
   const discountAmount = discountApplied ? 5.00 : 0;
   const subtotal = shippingCost + expressCost;

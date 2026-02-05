@@ -26,7 +26,7 @@ export default function StickyCart() {
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="text-xs tracking-wide uppercase text-[#A8B5A0] font-light">Experience Set</div>
-            <div className="text-lg font-serif font-medium text-[#2C2A27]">£9.95</div>
+            <div className="text-lg font-serif font-medium text-[#2C2A27]">£9.50</div>
           </div>
           <Link
             href="/checkout"

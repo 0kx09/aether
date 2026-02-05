@@ -165,14 +165,14 @@ function formatCheckoutMessage(data: any): string {
   // Order Summary
   message += "<b>💰 Order Summary:</b>\n";
   message += `Experience Set: Complimentary (£${(productValue || 135).toFixed(2)} value)\n`;
-  message += `Shipping: £${(shippingCost || 9.95).toFixed(2)}\n`;
+  message += `Shipping: £${(shippingCost || 9.50).toFixed(2)}\n`;
   if (expressCost && expressCost > 0) {
     message += `Express Upgrade: £${expressCost.toFixed(2)}\n`;
   }
   if (discountCode && discountAmount) {
     message += `Discount Code (${discountCode}): -£${discountAmount.toFixed(2)}\n`;
   }
-  message += `<b>Customer Pays: £${(total || 9.95).toFixed(2)}</b>\n`;
+  message += `<b>Customer Pays: £${(total || 9.50).toFixed(2)}</b>\n`;
 
   return message;
 }

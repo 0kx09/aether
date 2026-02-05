@@ -152,7 +152,7 @@ export default function SuccessPage() {
               )}
               <div className="flex justify-between items-center pt-2 border-t border-[#E8E3DC]">
                 <span className="font-serif font-medium text-[#2C2A27]">Shipping Reserved</span>
-                <span className="font-serif font-medium text-[#2C2A27]">£{(9.95 - discountAmount).toFixed(2)}</span>
+                <span className="font-serif font-medium text-[#2C2A27]">£{(9.50 - discountAmount).toFixed(2)}</span>
               </div>
               <p className="text-xs text-[#A8B5A0] font-light italic pt-2">
                 * Charged only upon successful delivery
