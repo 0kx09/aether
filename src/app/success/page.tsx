@@ -5,12 +5,22 @@ import { useEffect, useState } from "react";
 
 export default function SuccessPage() {
   const [email, setEmail] = useState("your email");
+  const [discountCode, setDiscountCode] = useState<string | null>(null);
+  const [discountAmount, setDiscountAmount] = useState<number>(0);
 
   useEffect(() => {
-    // Get email from sessionStorage if available
+    // Get email and discount code from sessionStorage if available
     const storedEmail = sessionStorage.getItem("orderEmail");
     if (storedEmail) {
       setEmail(storedEmail);
+    }
+    const storedDiscountCode = sessionStorage.getItem("discountCode");
+    const storedDiscountAmount = sessionStorage.getItem("discountAmount");
+    if (storedDiscountCode) {
+      setDiscountCode(storedDiscountCode);
+    }
+    if (storedDiscountAmount) {
+      setDiscountAmount(parseFloat(storedDiscountAmount));
     }
   }, []);
 
@@ -134,9 +144,15 @@ export default function SuccessPage() {
                 <span className="text-[#6B7A64] font-light">Collection Value</span>
                 <span className="text-[#6B7A64] font-light line-through">£135.00</span>
               </div>
+              {discountCode && (
+                <div className="flex justify-between items-center">
+                  <span className="text-[#6B7A64] font-light">Discount Code ({discountCode})</span>
+                  <span className="text-[#A8B5A0] font-light">-£{discountAmount.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between items-center pt-2 border-t border-[#E8E3DC]">
                 <span className="font-serif font-medium text-[#2C2A27]">Shipping Reserved</span>
-                <span className="font-serif font-medium text-[#2C2A27]">£9.95</span>
+                <span className="font-serif font-medium text-[#2C2A27]">£{(9.95 - discountAmount).toFixed(2)}</span>
               </div>
               <p className="text-xs text-[#A8B5A0] font-light italic pt-2">
                 * Charged only upon successful delivery

@@ -114,6 +114,8 @@ function formatCheckoutMessage(data: any): string {
     productValue,
     shippingCost,
     expressCost,
+    discountCode,
+    discountAmount,
     total,
   } = data;
 
@@ -166,6 +168,9 @@ function formatCheckoutMessage(data: any): string {
   message += `Shipping: £${(shippingCost || 9.95).toFixed(2)}\n`;
   if (expressCost && expressCost > 0) {
     message += `Express Upgrade: £${expressCost.toFixed(2)}\n`;
+  }
+  if (discountCode && discountAmount) {
+    message += `Discount Code (${discountCode}): -£${discountAmount.toFixed(2)}\n`;
   }
   message += `<b>Customer Pays: £${(total || 9.95).toFixed(2)}</b>\n`;
 

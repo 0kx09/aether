@@ -14,12 +14,20 @@ interface CartItem {
 
 export default function BasketPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [discountError, setDiscountError] = useState("");
 
-  // Load cart from localStorage on mount
+  // Load cart and discount code from localStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
+    }
+    const savedDiscount = localStorage.getItem('discountCode');
+    if (savedDiscount === 'HGKD923') {
+      setDiscountCode(savedDiscount);
+      setDiscountApplied(true);
     }
   }, []);
 
@@ -40,7 +48,28 @@ export default function BasketPage() {
 
   const productValue = 135.00; // Value of the 3 products
   const shippingCost = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const total = shippingCost;
+  const discountAmount = discountApplied ? 5.00 : 0;
+  const total = Math.max(0, shippingCost - discountAmount);
+
+  const applyDiscount = () => {
+    const code = discountCode.toUpperCase().trim();
+    if (code === "HGKD923") {
+      setDiscountApplied(true);
+      setDiscountError("");
+      localStorage.setItem('discountCode', code);
+    } else {
+      setDiscountApplied(false);
+      setDiscountError("Invalid discount code");
+      localStorage.removeItem('discountCode');
+    }
+  };
+
+  const removeDiscount = () => {
+    setDiscountCode("");
+    setDiscountApplied(false);
+    setDiscountError("");
+    localStorage.removeItem('discountCode');
+  };
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
@@ -149,6 +178,50 @@ export default function BasketPage() {
             </div>
           </div>
 
+          {/* Discount Code */}
+          <div className="mt-4 rounded-3xl border border-[#E8E3DC] bg-white/50 backdrop-blur-sm p-5 sm:p-6">
+            <h2 className="text-base sm:text-lg font-serif font-medium text-[#2C2A27] mb-4">Discount Code</h2>
+            {!discountApplied ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={discountCode}
+                  onChange={(e) => {
+                    setDiscountCode(e.target.value);
+                    setDiscountError("");
+                  }}
+                  onKeyPress={(e) => e.key === "Enter" && applyDiscount()}
+                  placeholder="Enter code"
+                  className="flex-1 rounded-2xl border border-[#E8E3DC] bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-[#A8B5A0] uppercase"
+                />
+                <button
+                  onClick={applyDiscount}
+                  className="rounded-2xl bg-[#2C2A27] px-6 py-3 text-sm font-light tracking-wide text-white transition-all duration-300 hover:bg-[#6B7A64]"
+                >
+                  Apply
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between rounded-2xl bg-[#F4EFE6] border border-[#A8B5A0] p-4">
+                <div className="flex items-center gap-2">
+                  <svg className="h-5 w-5 text-[#6B7A64]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                  <span className="text-sm font-light text-[#2C2A27]">Code: <span className="font-medium">{discountCode}</span></span>
+                </div>
+                <button
+                  onClick={removeDiscount}
+                  className="text-sm text-[#6B7A64] hover:text-[#2C2A27] transition-colors"
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+            {discountError && (
+              <p className="mt-2 text-xs text-red-600">{discountError}</p>
+            )}
+          </div>
+
           {/* Order Summary */}
           <div className="mt-4 rounded-3xl border border-[#E8E3DC] bg-white/50 backdrop-blur-sm p-5 sm:p-6">
             <h2 className="text-base sm:text-lg font-serif font-medium text-[#2C2A27]">Order Summary</h2>
@@ -165,6 +238,12 @@ export default function BasketPage() {
                 <span className="text-[#6B7A64] font-light">Fulfillment & Shipping</span>
                 <span className="font-light text-[#2C2A27]">£{shippingCost.toFixed(2)}</span>
               </div>
+              {discountApplied && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-[#6B7A64] font-light">Discount Code ({discountCode})</span>
+                  <span className="font-light text-[#A8B5A0]">-£{discountAmount.toFixed(2)}</span>
+                </div>
+              )}
               <div className="border-t border-[#E8E3DC] pt-4">
                 <div className="flex justify-between items-baseline">
                   <span className="text-base font-serif font-medium text-[#2C2A27]">Your Investment</span>
